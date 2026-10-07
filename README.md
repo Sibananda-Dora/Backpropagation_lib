@@ -1,5 +1,7 @@
 # backprop-lib
 
+![backprop-lib](backprop_image.png)
+
 A tiny scalar-valued autograd engine and a neural net library on top of it with a PyTorch-like API — in the spirit of [Karpathy's micrograd](https://github.com/karpathy/micrograd), but with a slightly different approach (see Differences).
 
 Implements backpropagation (reverse-mode autodiff) over a dynamically built DAG, plus `Neuron` / `Layer` / `MLP` on top. Extracted from `manual_backprop.ipynb` into an installable package:
@@ -9,15 +11,13 @@ backprop/
   __init__.py   # package entry: Value + nn
   engine.py     # Value autograd engine (+ - * / ** tanh exp relu)
   nn.py         # Module, Neuron, Layer, MLP (tanh-based)
-  viz.py        # trace() + draw_dot() graphviz helpers (optional dep)
+  viz.py        # trace() + draw_dot() graphviz helpers
 test/
   test_engine.py
-manual_backprop.ipynb  # original derivation / demo notebook
+manual_backprop.ipynb  # derivation / demo notebook
 ```
 
 ## Installation
-
-From PyPI (after you publish — see below):
 
 ```bash
 pip install backprop-lib
@@ -26,13 +26,7 @@ pip install backprop-lib
 From source:
 
 ```bash
-pip install -e ".[viz]"
-```
-
-With dev/test tools:
-
-```bash
-pip install -e ".[dev]"
+pip install -e .
 pytest
 ```
 
@@ -73,15 +67,14 @@ for k in range(20):
     print(k, loss.data)
 ```
 
-Graphviz visualisation (needs `pip install backprop-lib[viz]` + Graphviz binary):
+Graphviz visualisation (needs the Graphviz system binary — the `graphviz` pip package installs automatically with the library):
 
 ```python
 from backprop.viz import draw_dot
 draw_dot(L)
 ```
 
-Note: the `graphviz` pip package does not install the Graphviz system binary and
-does not set `PATH` for you. On Windows, install from graphviz.org with `Add to PATH`
+Note: on Windows, install the binary from graphviz.org with `Add to PATH`
 checked (or `winget install graphviz`), otherwise add `C:\Program Files\Graphviz\bin`
 to `PATH` manually, restart the terminal, and verify with `dot -V`.
 
@@ -93,29 +86,11 @@ to `PATH` manually, restart the terminal, and verify with `dot -V`.
 - `__pow__` unwraps a `Value` exponent to its `.data` so notebook code like `other**Value(-1.0)` keeps working; plain int/float exponents are preferred.
 - Explicit `__sub__` backward (`+1/-1`) instead of going through `__neg__`.
 
-## Publishing to PyPI
-
-1. Rename later if you want: edit `name = "backprop-lib"` in `pyproject.toml`
-   (and the `backprop/` folder if you want the import name to change too),
-   then update imports + this README.
-2. Bump `version`.
-3. Build + upload:
-
-```bash
-python -m pip install --upgrade build twine
-python -m build
-python -m twine upload dist/*
-# TestPyPI first (recommended):
-# python -m twine upload --repository testpypi dist/*
-```
-
 ## Running tests
 
 ```bash
 pytest -v
 ```
-
-Tests use only the stdlib (`math`, `random`) + `pytest` — no `torch` required.
 
 ## License
 
