@@ -1,5 +1,4 @@
-"""backprop — tiny scalar autograd engine + neural net library."""
-
+"""scalar autograd engine + neural net library."""
 from .engine import Value
 from . import nn
 

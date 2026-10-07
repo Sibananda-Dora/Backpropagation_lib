@@ -1,12 +1,4 @@
-"""Graphviz visualisation helpers (extracted from ``manual_backprop.ipynb``).
-
-Requires the optional ``graphviz`` package plus the Graphviz system binary::
-
-    pip install backprop-lib[viz]
-"""
-
 from .engine import Value
-
 
 def trace(root):
     # builds a set of all nodes and edges in a graph

@@ -1,9 +1,3 @@
-"""Tiny neural-net library on top of the autograd ``Value`` (PyTorch-like API).
-
-Different from micrograd: neurons here use ``tanh`` by default and the
-bias is randomly initialised, matching the original ``manual_backprop.ipynb``.
-"""
-
 import random
 from .engine import Value
 
